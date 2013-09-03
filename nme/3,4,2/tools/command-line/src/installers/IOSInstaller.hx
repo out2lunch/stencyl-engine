@@ -141,11 +141,16 @@ class IOSInstaller extends InstallerBase {
 		context.ADDL_PBX_FILE_REFERENCE = "";
 		context.ADDL_PBX_FRAMEWORKS_BUILD_PHASE = "";
 		context.ADDL_PBX_FRAMEWORK_GROUP = "";
-		
+		context.ADDL_PBX_CUSTOM_TEMPLATE_GROUP = "";
+		context.CUSTOM_LIBRARY_SEARCH_PATHS = "";
+		var libraryPaths = "";
+		var extension;
+
 		for (dependencyName in dependencyNames) {
 			
-			if (Path.extension (dependencyName) == "framework") {
-				
+			extension = Path.extension (dependencyName);
+			if (extension == "framework") {
+
 				var frameworkID = "11C0000000000018" + Utils.getUniqueID ();
 				var fileID = "11C0000000000018" + Utils.getUniqueID ();
 				
@@ -154,10 +159,30 @@ class IOSInstaller extends InstallerBase {
 				context.ADDL_PBX_FRAMEWORKS_BUILD_PHASE += "				" + frameworkID + " /* " + dependencyName + " in Frameworks */,\n";
 				context.ADDL_PBX_FRAMEWORK_GROUP += "				" + fileID + " /* " + dependencyName + " */,\n";
 				
+			} else if (extension == "a") {
+
+				var frameworkID = "11C0000000000018" + Utils.getUniqueID ();
+				var fileID = "11C0000000000018" + Utils.getUniqueID ();
+				var dependencyNameNoPath = Path.withoutDirectory(dependencyName);
+				var dependencyNameWithFullPath = defines.get("APP_FILE") + "/" + dependencyName;
+				var dependencyFullPath = Path.directory(dependencyNameWithFullPath);
+
+				context.ADDL_PBX_BUILD_FILE += "		" + frameworkID + " /* " + dependencyNameNoPath + " in Frameworks */ = {isa = PBXBuildFile; fileRef = " + fileID + " /* " + dependencyNameNoPath + " */; };\n";
+				context.ADDL_PBX_FILE_REFERENCE += "		" + fileID + " /* " + dependencyNameNoPath + " */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = " + dependencyNameNoPath + "; path = " + dependencyNameWithFullPath + "; sourceTree = \"<group>\"; };\n";
+				context.ADDL_PBX_FRAMEWORKS_BUILD_PHASE += "				" + frameworkID + " /* " + dependencyNameNoPath + " in Frameworks */,\n";
+				context.ADDL_PBX_FRAMEWORK_GROUP += "				" + fileID + " /* " + dependencyNameNoPath + " */,\n";
+				context.ADDL_PBX_CUSTOM_TEMPLATE_GROUP += "				" + fileID + " /* " + dependencyNameNoPath + " */,\n";
+				libraryPaths += "					\"\\\"$(SRCROOT)/" + dependencyFullPath + "\\\"\",\n";
+
 			}
-			
 		}
-		
+
+		if (libraryPaths != "") {
+
+			context.CUSTOM_LIBRARY_SEARCH_PATHS += "				LIBRARY_SEARCH_PATHS = (\n" + "					\"$(inherited)\",\n" + libraryPaths + "				);\n";
+
+		}
+
 		context.HXML_PATH = templatePaths[0] + "iphone/PROJ/haxe/Build.hxml";
 		updateIcon ();
 		updateLaunchImage ();

@@ -148,6 +148,7 @@
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				::ADDL_PBX_CUSTOM_TEMPLATE_GROUP::
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -355,6 +356,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 
+				::CUSTOM_LIBRARY_SEARCH_PATHS::
 	            "LIBRARY_SEARCH_PATHS[arch=armv6]" = (
 					"$(inherited)",
 					"\"$(SRCROOT)/::APP_FILE::/lib/armv6-debug\"",
@@ -388,6 +390,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 
+				::CUSTOM_LIBRARY_SEARCH_PATHS::
             	"LIBRARY_SEARCH_PATHS[arch=armv6]" = (
 					"$(inherited)",
 					"\"$(SRCROOT)/::APP_FILE::/lib/armv6\"",
