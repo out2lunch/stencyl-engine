@@ -168,7 +168,7 @@ class IOSInstaller extends InstallerBase {
 				var dependencyFullPath = Path.directory(dependencyNameWithFullPath);
 
 				context.ADDL_PBX_BUILD_FILE += "		" + frameworkID + " /* " + dependencyNameNoPath + " in Frameworks */ = {isa = PBXBuildFile; fileRef = " + fileID + " /* " + dependencyNameNoPath + " */; };\n";
-				context.ADDL_PBX_FILE_REFERENCE += "		" + fileID + " /* " + dependencyNameNoPath + " */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = " + dependencyNameNoPath + "; path = " + dependencyNameWithFullPath + "; sourceTree = \"<group>\"; };\n";
+				context.ADDL_PBX_FILE_REFERENCE += "		" + fileID + " /* " + dependencyNameNoPath + " */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = " + dependencyNameNoPath + "; path = \"" + dependencyNameWithFullPath + "\"; sourceTree = \"<group>\"; };\n";
 				context.ADDL_PBX_FRAMEWORKS_BUILD_PHASE += "				" + frameworkID + " /* " + dependencyNameNoPath + " in Frameworks */,\n";
 				context.ADDL_PBX_FRAMEWORK_GROUP += "				" + fileID + " /* " + dependencyNameNoPath + " */,\n";
 				context.ADDL_PBX_CUSTOM_TEMPLATE_GROUP += "				" + fileID + " /* " + dependencyNameNoPath + " */,\n";
