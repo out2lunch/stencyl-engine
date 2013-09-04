@@ -1,0 +1,6 @@
+-main ApplicationMain ::HAXE_FLAGS::
+-js ::OUTPUT_FILE::
+-cp ::OUTPUT_DIR::/haxe
+--remap flash:nme
+-debug
+--js-modern
